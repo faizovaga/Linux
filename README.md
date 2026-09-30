@@ -1,0 +1,37 @@
+# Linux
+# ДЗ Обновление ядра системы
+# Запустите ВМ c Ubuntu.
+# Обновите ядро ОС на новейшую стабильную версию из mainline-репозитория.
+# Оформите отчет в README-файле в GitHub-репозитори
+
+`faizovaga@Ubuntu2404-desktop:~/.ssh$ ssh -i myrsakey faizovaga@192.168.0.100`
+Enter passphrase for key 'myrsakey':
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-142-generic x86_64)
+
+
+`faizovaga@Ubuntu2404-server:~$ cd kernel`
+
+
+`faizovaga@Ubuntu2404-server:~/kernel$ ls -il`
+total 392980
+2359313 -rw-rw-r-- 1 faizovaga faizovaga  13875326 Feb 15  2025 linux-headers-6.13.2-061302_6.13.2-061302.202502081010_all.deb
+2359309 -rw-rw-r-- 1 faizovaga faizovaga   3694072 Feb 15  2025 linux-headers-6.13.2-061302-generic_6.13.2-061302.202502081010_amd64.deb
+2359312 -rw-rw-r-- 1 faizovaga faizovaga  15677632 Feb 15  2025 linux-image-unsigned-6.13.2-061302-generic_6.13.2-061302.202502081010_amd64.deb
+2359310 -rw-rw-r-- 1 faizovaga faizovaga 184576192 Feb 15  2025 linux-modules-6.13.2-061302-generic_6.13.2-061302.202502081010_amd64.deb
+
+
+`faizovaga@Ubuntu2404-server:~/kernel$ sudo update-grub`
+`faizovaga@Ubuntu2404-server:~/kernel$ sudo grub-set-default 0`
+`faizovaga@Ubuntu2404-server:~/kernel$ uname -r`
+6.8.0-142-generic
+`faizovaga@Ubuntu2404-server:~/kernel$ sudo reboot`
+Broadcast message from root@Ubuntu2404-server on pts/1 (Mon 2026-09-28 14:59:36 UTC):
+The system will reboot now!
+
+`faizovaga@Ubuntu2404-desktop:~$ cd .ssh`
+`faizovaga@Ubuntu2404-desktop:~/.ssh$ ssh -i myrsakey faizovaga@192.168.0.100`
+Enter passphrase for key 'myrsakey':
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.13.2-061302-generic x86_64)
+
+`faizovaga@Ubuntu2404-server:~$ uname -r`
+6.13.2-061302-generic
