@@ -89,10 +89,6 @@ md0 : active raid10 sdg[4] sdf[2] sde[1] sdd[0]
       20953088 blocks super 1.2 512K chunks 2 near-copies [4/3] [UUU_]
       [===========>.........]  recovery = 55.6% (5832576/10476544) finish=0.3min speed=208306K/sec
 
-md127 : active (auto-read-only) raid1 sdc[2]
-      10476544 blocks super 1.2 [2/1] [U_]
-
-
 faizovaga@Ubuntu2404-desktop:~$ sudo mdadm -D /dev/md0
 /dev/md0:
            Version : 1.2
