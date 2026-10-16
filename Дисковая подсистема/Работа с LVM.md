@@ -192,6 +192,7 @@ sdd                         8:48   0    2G  0 disk
 ```
 
 #### 4. /home - сделать том для снапшотов.
+
 ```
 root@Ubuntu2404-server:~# df -Th
 Filesystem                        Type   Size  Used Avail Use% Mounted on
@@ -247,6 +248,11 @@ sdd                         8:48   0    2G  0 disk
   └─vg_var-lv_var         252:4    0  952M  0 lvm  /var
 ```
 #### 5. Прописать монтирование в fstab. Попробовать с разными опциями и разными файловыми системами (на выбор).
+Запись инфо о каталоге /home в fstab для автоматического монтирования:
+```
+root@Ubuntu2404-server:~# echo "`blkid | grep Home | awk '{print $2}'` \
+> /home xfs defaults 0 0" >> /etc/fstab
+```
 
 #### 6. Работа со снапшотами: 
 * a. сгенерить файлы в /home/; 
