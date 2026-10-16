@@ -204,7 +204,8 @@ tmpfs                             tmpfs  5.0M     0  5.0M   0% /run/lock
 /dev/sda3                         ext4   2.0G  213M  1.6G  12% /boot
 tmpfs                             tmpfs  795M   12K  795M   1% /run/user/1000
 ```
-Создаем новую LV LogVol_Home, ФС ext4
+Создаем новую LV LogVol_Home, ФС ext4:
+```
 root@Ubuntu2404-server:~# lvcreate -n LogVol_Home -L 1.G /dev/vg_home
   Logical volume "LogVol_Home" created.
 root@Ubuntu2404-server:~# mkfs.ext4 /dev/vg_home/LogVol_Home
