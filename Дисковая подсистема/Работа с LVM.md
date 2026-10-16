@@ -257,11 +257,14 @@ root@Ubuntu2404-server:~# echo "`blkid | grep Home | awk '{print $2}'` \
 
 #### 6. Работа со снапшотами: 
 * a. сгенерить файлы в /home/; 
-* b. снять снапшот; c. удалить часть файлов; 
+* b. снять снапшот;
+* c. удалить часть файлов; 
 * d. восстановится со снапшота.
 
 Создать файлы в /home/ :
-`root@Ubuntu2404-server:~# touch /home/file{1..20} `
+```
+root@Ubuntu2404-server:~# touch /home/file{1..20}
+``` 
 Cнять снапшот:
 ```
 root@Ubuntu2404-server:~# lvcreate -L 100MB -s -n home_snap /dev/vg_home/LogVol_Home
