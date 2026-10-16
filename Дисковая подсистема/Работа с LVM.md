@@ -71,34 +71,7 @@ root@Ubuntu2404-server:~# mkfs.ext4 /dev/vg_home/LogVol_Home
 mke2fs 1.47.0 (5-Feb-2023)
 Creating filesystem with 262144 4k blocks and 65536 inodes
 
-```
-Монтируем новую LV в /mnt  и копируем каталог /home
-```
-root@Ubuntu2404-server:~# mount /dev/vg_home/LogVol_Home /mnt/
-root@Ubuntu2404-server:~# cp -aR /home/* /mnt/
-root@Ubuntu2404-server:~# rm -rf /home/*
-root@Ubuntu2404-server:~# umount /mnt
-```
-Монтируем директорию /home на новый раздел и вносим правки в fstab:
-```
-root@Ubuntu2404-server:~# mount /dev/vg_home/LogVol_Home /home/
-root@Ubuntu2404-server:~# echo "`blkid | grep Home | awk '{print $2}'` \
-> /home xfs defaults 0 0" >> /etc/fstab
-root@Ubuntu2404-server:~# nano /etc/fstab
-```
-Проверка результатов
-```
-root@Ubuntu2404-server:~# lsblk
-NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
-sda                         8:0    0   52G  0 disk
-├─sda1                      8:1    0    1M  0 part
-├─sda2                      8:2    0    8G  0 part
-│ └─ubuntu--vg-ubuntu--lv 252:5    0    8G  0 lvm  /
-├─sda3                      8:3    0    2G  0 part /boot
-└─sda4                      8:4    0    2G  0 part
-  └─vg_home-LogVol_Home   252:6    0    1G  0 lvm  /home
 
-```
 #### 3. Выделить том под /var - сделать в mirror.
 ```
 root@Ubuntu2404-server:~# lsblk
