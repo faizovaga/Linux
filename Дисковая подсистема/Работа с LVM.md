@@ -191,7 +191,7 @@ sdd                         8:48   0    2G  0 disk
   └─vg_var-lv_var         252:6    0  952M  0 lvm  /var
 ```
 
-#### 4. Выделить том под /home 
+#### 4. /home - сделать том для снапшотов.
 ```
 root@Ubuntu2404-server:~# df -Th
 Filesystem                        Type   Size  Used Avail Use% Mounted on
@@ -246,6 +246,66 @@ sdd                         8:48   0    2G  0 disk
 └─vg_var-lv_var_rimage_1  252:3    0  952M  0 lvm
   └─vg_var-lv_var         252:4    0  952M  0 lvm  /var
 ```
+#### 5. Прописать монтирование в fstab. Попробовать с разными опциями и разными файловыми системами (на выбор).
+
+#### 6. Работа со снапшотами: 
+* a. сгенерить файлы в /home/; 
+* b. снять снапшот; c. удалить часть файлов; 
+* d. восстановится со снапшота.
+
+Создать файлы в /home/ :
+`root@Ubuntu2404-server:~# touch /home/file{1..20} `
+Cнять снапшот:
+```
+root@Ubuntu2404-server:~# lvcreate -L 100MB -s -n home_snap /dev/vg_home/LogVol_Home
+  Logical volume "home_snap" created.
+ ```
+Удалить часть файлов:
+```
+root@Ubuntu2404-server:~# ls /home/
+faizovaga  file10  file3  file5  file7  file9
+file1      file2   file4  file6  file8  lost+found
+```
+Восстановится со снапшота:
+```
+root@Ubuntu2404-server:~# umount /home
+root@Ubuntu2404-server:~# lvconvert --merge /dev/vg_home/home_snap
+  Merging of volume vg_home/home_snap started.
+  vg_home/LogVol_Home: Merged: 100.00%
+root@Ubuntu2404-server:~# mount /dev/mapper/vg_home-LogVol_Home /home
+mount: (hint) your fstab has been modified, but systemd still uses
+       the old version; use 'systemctl daemon-reload' to reload.
+```
+Проверка результатов:
+```      
+root@Ubuntu2404-server:~# ls -al /home
+total 28
+drwxr-xr-x  4 root      root       4096 Oct 16 09:40 .
+drwxr-xr-x 23 root      root       4096 Oct 16 09:09 ..
+drwxr-x---  5 faizovaga faizovaga  4096 Sep 28 14:24 faizovaga
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file1
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file10
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file11
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file12
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file13
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file14
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file15
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file16
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file17
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file18
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file19
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file2
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file20
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file3
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file4
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file5
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file6
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file7
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file8
+-rw-r--r--  1 root      root          0 Oct 16 09:40 file9
+drwx------  2 root      root      16384 Oct 16 09:36 lost+found
+```
+
 
 
 
