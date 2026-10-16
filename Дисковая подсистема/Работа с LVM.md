@@ -70,7 +70,7 @@ root@Ubuntu2404-server:~# mkfs.ext4 /dev/vg_home/LogVol_Home
 
 mke2fs 1.47.0 (5-Feb-2023)
 Creating filesystem with 262144 4k blocks and 65536 inodes
-
+```
 
 #### 3. Выделить том под /var - сделать в mirror.
 ```
