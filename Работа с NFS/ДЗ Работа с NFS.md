@@ -56,7 +56,7 @@ All mount points on 192.168.0.118:
 ```
 
 
-Проверка наличия файлов, файл  final_check создан, а client_file был экспортирован:
+Проверка наличия файлов, файл  final_check создан в папке клиента, а client_file был экспортирован из сервера:
 ```
 root@ubuntu2404-client:/mnt# touch final_check
 root@ubuntu2404-client:/mnt# ls
