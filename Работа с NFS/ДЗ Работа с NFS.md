@@ -6,7 +6,7 @@
 * экспортированная директория должна автоматически монтироваться на клиенте при старте виртуальной машины (systemd, autofs или fstab — любым способом);
 * монтирование и работа NFS на клиенте должна быть организована с использованием NFSv3.
 
-##### На первой виртуальной машине выполняется установка сервера NFS. \
+##### На первой виртуальной машине выполняется установка сервера NFS. 
 Запускаем на сервере скрипт nfss_setup.sh https://github.com/faizovaga/Linux/blob/main/%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%20%D1%81%20NFS/nfss_setup.sh :
 ```
 faizovaga@Ubuntu2404-server:~$ nano nfss_setup.sh
@@ -25,17 +25,17 @@ root@Ubuntu2404-server:/srv/share/upload# ls
 client_file
 ```
 
-##### На второй виртуальной машине выполняется установка клиента NFS. \
+##### На второй виртуальной машине выполняется установка клиента NFS. 
 
 Запустить скрипт nfsc_setup.sh https://github.com/faizovaga/Linux/blob/main/%D0%A0%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%20%D1%81%20NFS/nfsc_setup.sh:
 ```
 root@ubuntu2404-client:~# ./nfsc_setup.sh
 ```
-Перейти в папку /mnt/upload/:
+Перейти в папку /mnt:
 ```
 root@ubuntu2404-client:~# ls -la /mnt
 ```
-Проверить, что  папка примонтировлась:
+Проверить, что  папка примонтировалась:
 ```
 root@ubuntu2404-client:~# df -Th
 Filesystem                       Type   Size  Used Avail Use% Mounted on
