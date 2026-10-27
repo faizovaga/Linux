@@ -73,7 +73,7 @@ nginx-mod-devel-1.26.3-6.el10.7.x86_64.rpm    nginx-mod-stream-1.26.3-6.el10.7.x
      Loaded: loaded (/usr/lib/systemd/system/nginx.service; disabled; preset: disabled)
      Active: active (running) since Tue 2026-10-27 05:35:35 EDT; 6s ago
 ```
-#### Создать свой репозиторий:
+##### Создать свой репозиторий:
 ```
 [root@localhost x86_64]# createrepo /usr/share/nginx/html/repo/
 Directory walk started
