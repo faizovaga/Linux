@@ -137,3 +137,5 @@ root@Ubuntu2404-server:~# systemctl status spawn-fcgi
 
 ##### 3. Доработать unit-файл Nginx (nginx.service) для запуска нескольких инстансов сервера с разными конфигурационными файлами одновременно.
 
+https://github.com/faizovaga/Linux/blob/main/Systemd/%D0%A1%D0%BA%D1%80%D0%B8%D0%BF%D1%82%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8%202-%D1%85%20nginx.sh
+
