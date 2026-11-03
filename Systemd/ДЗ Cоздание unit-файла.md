@@ -103,7 +103,7 @@ EOF
 ```
 ```
 root@Ubuntu2404-server:~# cat << 'EOF' > /etc/systemd/system/spawn-fcgi.service   
- [Unit]
+[Unit]
 Description=Spawn-fcgi startup service by Otus                                     
 After=network.target
 
