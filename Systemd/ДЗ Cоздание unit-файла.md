@@ -135,3 +135,5 @@ root@Ubuntu2404-server:~# systemctl status spawn-fcgi
      CGroup: /system.slice/spawn-fcgi.service
 ```
 
+##### 3. Доработать unit-файл Nginx (nginx.service) для запуска нескольких инстансов сервера с разными конфигурационными файлами одновременно.
+
