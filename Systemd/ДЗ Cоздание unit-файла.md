@@ -3,7 +3,7 @@
 2. Установить spawn-fcgi и создать unit-файл (spawn-fcgi.sevice) с помощью переделки init-скрипта (https://gist.github.com/cea2k/1318020).
 3. Доработать unit-файл Nginx (nginx.service) для запуска нескольких инстансов сервера с разными конфигурационными файлами одновременно.
 
-1. Написать service, который будет раз в 30 секунд мониторить лог на предмет наличия ключевого слова
+##### 1. Написать service, который будет раз в 30 секунд мониторить лог на предмет наличия ключевого слова
 
 ```
 root@Ubuntu2404-server:~# cat << 'EOF' > /etc/default/watchlog
@@ -86,3 +86,52 @@ root@Ubuntu2404-server:~# tail -n 10 /var/log/syslog  | grep word
 2026-10-31T13:52:05.204354+00:00 Ubuntu2404-server root: Sat Oct 31 01:52:05 PM UTC 2026: I found word, Master!
 2026-10-31T13:52:45.211617+00:00 Ubuntu2404-server root: Sat Oct 31 01:52:45 PM UTC 2026: I found word, Master!
 ```
+
+##### 2. Установить spawn-fcgi и создать unit-файл (spawn-fcgi.sevice) с помощью переделки init-скрипта
+```
+root@Ubuntu2404-server:~# apt install spawn-fcgi php php-cgi php-cli  apache2 libapache2-mod-fcgid -y
+```
+```
+root@Ubuntu2404-server:~# cat << 'EOF' > /etc/default/spawn-fcgi                   # Конфигурация для spawn-fcgi
+FCGI_SOCKET=/var/run/php-fcgi.sock
+FCGI_PROGRAM=/usr/bin/php-cgi
+FCGI_USER=www-data
+FCGI_GROUP=www-data
+FCGI_CHILDREN=32
+OPTIONS="-s $FCGI_SOCKET -f $FCGI_PROGRAM -u $FCGI_USER -g $FCGI_GROUP -C $FCGI_CHILDREN"
+EOF
+```
+```
+root@Ubuntu2404-server:~# cat << 'EOF' > /etc/systemd/system/spawn-fcgi.service   
+ [Unit]
+Description=Spawn-fcgi startup service by Otus                                     
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/spawn-fcgi.pid
+EnvironmentFile=/etc/spawn-fcgi/fcgi.conf
+ExecStart=/usr/bin/spawn-fcgi -n $OPTIONS
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+```
+root@Ubuntu2404-server:~# systemctl start spawn-fcgi
+```
+Проверка результатов:
+
+```
+root@Ubuntu2404-server:~# systemctl status spawn-fcgi
+● spawn-fcgi.service - Spawn-fcgi startup service by Otus
+     Loaded: loaded (/etc/systemd/system/spawn-fcgi.service; disabled; preset: ena>
+     Active: active (running) since Sat 2026-10-31 14:26:34 UTC; 11s ago
+   Main PID: 8716 (php-cgi)
+      Tasks: 33 (limit: 9419)
+     Memory: 14.4M (peak: 14.5M)
+        CPU: 18ms
+     CGroup: /system.slice/spawn-fcgi.service
+```
+
