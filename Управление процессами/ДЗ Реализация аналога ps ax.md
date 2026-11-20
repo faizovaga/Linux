@@ -8,26 +8,32 @@
 * рабочий скрипт, выводящий список процессов по данным из /proc
 
 --Посмотреть процессы nginx с PID
+```
 root@Ubuntu2404-server:~# pstree -p | grep nginx
            |-nginx(727)---nginx(728)
-
+```
 --Найти имя сервиса по найденным PID
+```
 root@Ubuntu2404-server:~# cat /proc/728/comm
 nginx
 root@Ubuntu2404-server:~# cat /proc/727/comm
 nginx
-
+```
 --Посмотреть дерево создания процессов
+```
 root@Ubuntu2404-server:~# pstree -sp 727
 systemd(1)───nginx(727)───nginx(728)
-
+```
 --Подробнее информация по родителю и потомку:
+```
 root@Ubuntu2404-server:~# ps -ef | grep nginx
 root         727       1  0 07:31 ?        00:00:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
 www-data     728     727  0 07:31 ?        00:00:00 nginx: worker process
 root        1425    1403  0 08:43 pts/4    00:00:00 grep --color=auto nginx
+```
 
 --Статусы, команды запуска:
+```
 root@Ubuntu2404-server:~# cat /proc/727/status | grep State
 State:  S (sleeping)
 
@@ -46,9 +52,9 @@ PPid:   727
 
 root@Ubuntu2404-server:~# cat /proc/728/cmdline
 nginx: worker process
-
-Просмотр через скрипт ps_nginx.sh:
-
+```
+##### Реализация просмотра через скрипт ps_nginx.sh:
+```
 #!/bin/bash
 
 # Процессы ("nginx")
@@ -87,10 +93,13 @@ for pid_dir in /proc/[0-9]*; do
         printf "%-8s %-8s %-10s %s\n" "$pid" "$ppid" "$state" "$cmdline"
     fi
 Done
+```
 
 Проверка результатов:
+```
 root@Ubuntu2404-server:~# ./ps_nginx.sh
 PID     PPID    STATE   COMMAND
 5198     1403     S (sleeping) /bin/bash ./ps_nginx.sh
 727      1        S (sleeping) nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
 728      727      S (sleeping) nginx: worker process
+```
